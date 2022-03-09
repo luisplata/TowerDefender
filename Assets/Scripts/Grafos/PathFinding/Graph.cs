@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,13 +6,12 @@ using UnityEngine;
 /// <summary>
 /// The Graph.
 /// </summary>
-public class Graph : MonoBehaviour
+public class Graph
 {
 
 	/// <summary>
 	/// The nodes.
 	/// </summary>
-	[SerializeField]
 	protected List<Node> m_Nodes = new List<Node> ();
 
 	/// <summary>

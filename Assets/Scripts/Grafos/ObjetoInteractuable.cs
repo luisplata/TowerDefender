@@ -6,58 +6,24 @@ using UnityEngine.UI;
 
 public class ObjetoInteractuable : MonoBehaviour
 {
-    [TextArea]
-    [Tooltip("A string using the TextArea attribute")]
-    public string dialogoBueno, dialogoMalo, dialogoFinal;
-    public List<ObjetoInteractuable> aristas;
-    private TeoriaDeGrafos padre;
-    private Button boton;
-    public int distancia;
-    public bool visitado = false;
-    public GameObject botonMapaGeneral;
     [SerializeField] private bool isFinal;
     [SerializeField] private bool isPortal;
     [SerializeField] private PjFather pj;
+    
+    private List<ObjetoInteractuable> aristas;
+    public int distancia;
+    private bool visitado;
     private List<PjFather> pjs;
     private Path _shortestPath;
 
     public bool IsFinal => isFinal;
     public bool IsPortal => isPortal;
 
-    public void Config(TeoriaDeGrafos father)
+    public List<ObjetoInteractuable> Aristas => aristas;
+
+    public void Config()
     {
-        padre = father;
         aristas = new List<ObjetoInteractuable>();
-    }
-    //preguntar si es el objeto final
-    //si no mostar dialogos
-    public void GenerarDialogosDeAristas()
-    {
-        List<string> dialogos = new List<string>();
-        //Debug.Log(padre.verticeFinal.gameObject.name + " - " + this.name+ " son iguales -> "+ padre.verticeFinal.Equals(this));
-        if (padre.verticeFinal.Equals(this))
-        {
-            if (PlayerPrefs.GetString("escenaSeleccionada").Equals(ConstantesDelProyecto.ESCENA_MAPA_IGLESIA))
-            {
-                //dialogos.Add(padre.dialogoSegunElTiempoTranscurrido());
-            }
-            else
-            {
-                dialogos.Add(dialogoFinal);
-            }
-            botonMapaGeneral.SetActive(true);
-            
-        }
-        else
-        {
-            //dialogos = padre.DialogosDeEsteObjeto(this);   
-        }
-        TextMeshProUGUI texto = GameObject.Find("CajaDeDialogos").GetComponent<TextMeshProUGUI>();
-        texto.text = string.Empty;
-        foreach(string s in dialogos)
-        {
-            texto.text += s + "\n";
-        }
     }
 
     public void ChangeMaterial(Material materialToRoad)
