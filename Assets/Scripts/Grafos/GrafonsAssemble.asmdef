@@ -1,0 +1,17 @@
+{
+    "name": "GrafonsAssemble",
+    "rootNamespace": "",
+    "references": [
+        "GUID:90dc982a0799df34a9e566440c000d26",
+        "GUID:be23dfbea352d654b9a5801b683b5efa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

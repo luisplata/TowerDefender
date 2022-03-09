@@ -12,13 +12,13 @@ public class Graph
 	/// <summary>
 	/// The nodes.
 	/// </summary>
-	protected List<Node> m_Nodes = new List<Node> ();
+	protected List<INodeCustom> m_Nodes = new List<INodeCustom> ();
 
 	/// <summary>
 	/// Gets the nodes.
 	/// </summary>
 	/// <value>The nodes.</value>
-	public virtual List<Node> nodes
+	public virtual List<INodeCustom> nodes
 	{
 		get
 		{
@@ -32,7 +32,7 @@ public class Graph
 	/// <returns>The shortest path.</returns>
 	/// <param name="start">Start Node.</param>
 	/// <param name="end">End Node.</param>
-	public virtual Path GetShortestPath (List<Node> nodes, Node start, Node end )
+	public virtual Path GetShortestPath (List<INodeCustom> nodes, INodeCustom start, INodeCustom end )
 	{
 		m_Nodes = nodes;
 		// We don't accept null arguments
@@ -47,22 +47,22 @@ public class Graph
 		// If the start and end are same node, we can return the start node
 		if ( start == end )
 		{
-			path.nodes.Add ( start );
+			path.Nodes().Add ( start );
 			return path;
 		}
 		
 		// The list of unvisited nodes
-		List<Node> unvisited = new List<Node> ();
+		List<INodeCustom> unvisited = new List<INodeCustom> ();
 		
 		// Previous nodes in optimal path from source
-		Dictionary<Node, Node> previous = new Dictionary<Node, Node> ();
+		Dictionary<INodeCustom, INodeCustom> previous = new Dictionary<INodeCustom, INodeCustom> ();
 		
 		// The calculated distances, set all to Infinity at start, except the start Node
-		Dictionary<Node, float> distances = new Dictionary<Node, float> ();
+		Dictionary<INodeCustom, float> distances = new Dictionary<INodeCustom, float> ();
 		
 		for ( int i = 0; i < m_Nodes.Count; i++ )
 		{
-			Node node = m_Nodes [ i ];
+			INodeCustom node = m_Nodes [ i ];
 			unvisited.Add ( node );
 			
 			// Setting the node distance to Infinity
@@ -78,7 +78,7 @@ public class Graph
 			unvisited = unvisited.OrderBy ( node => distances [ node ] ).ToList ();
 			
 			// Getting the Node with smallest distance
-			Node current = unvisited [ 0 ];
+			INodeCustom current = unvisited [ 0 ];
 			
 			// Remove the current node from unvisisted list
 			unvisited.Remove ( current );
@@ -92,24 +92,24 @@ public class Graph
 				{
 					
 					// Insert the node onto the final result
-					path.nodes.Insert ( 0, current );
+					path.Nodes().Insert ( 0, current );
 					
 					// Traverse from start to end
 					current = previous [ current ];
 				}
 				
 				// Insert the source onto the final result
-				path.nodes.Insert ( 0, current );
+				path.Nodes().Insert ( 0, current );
 				break;
 			}
 			
 			// Looping through the Node connections (neighbors) and where the connection (neighbor) is available at unvisited list
-			for ( int i = 0; i < current.connections.Count; i++ )
+			for ( int i = 0; i < current.GetConnections().Count; i++ )
 			{
-				Node neighbor = current.connections [ i ];
+				INodeCustom neighbor = current.GetConnections() [ i ];
 				
 				// Getting the distance between the current node and the connection (neighbor)
-				float length = Vector3.Distance ( current.transform.position, neighbor.transform.position );
+				float length = Vector3.Distance ( current.GetGameObjectPosition(), neighbor.GetGameObjectPosition() );
 				
 				// The distance from start node to this connection (neighbor) of current node
 				float alt = distances [ current ] + length;

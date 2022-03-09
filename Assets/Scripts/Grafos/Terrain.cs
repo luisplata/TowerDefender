@@ -55,37 +55,37 @@ public class Terrain
                 if (j > 0)
                 {
                     portalListarray[i, j].Aristas.Add(portalListarray[i, j - 1]);
-                    portalListarray[i, j].GetNode().connections.Add(portalListarray[i, j - 1].GetNode());
+                    portalListarray[i, j].GetNode().GetConnections().Add(portalListarray[i, j - 1].GetNode());
                 }
 
                 if (i > 0)
                 {
-                    portalListarray[i, j].GetNode().connections.Add(portalListarray[i - 1, j].GetNode());
+                    portalListarray[i, j].GetNode().GetConnections().Add(portalListarray[i - 1, j].GetNode());
                     portalListarray[i, j].Aristas.Add(portalListarray[i - 1, j]);
                 }
 
                 if (j + 1 < _size)
                 {
                     portalListarray[i, j].Aristas.Add(portalListarray[i, j + 1]);
-                    portalListarray[i, j].GetNode().connections.Add(portalListarray[i, j + 1].GetNode());
+                    portalListarray[i, j].GetNode().GetConnections().Add(portalListarray[i, j + 1].GetNode());
                 }
 
                 if (i + 1 < _size)
                 {
-                    portalListarray[i, j].GetNode().connections.Add(portalListarray[i + 1, j].GetNode());
+                    portalListarray[i, j].GetNode().GetConnections().Add(portalListarray[i + 1, j].GetNode());
                     portalListarray[i, j].Aristas.Add(portalListarray[i + 1, j]);
                 }
             }
         }
 
-        var nodelist = portalListarray.Cast<ObjetoInteractuable>().ToList().Select(p => p.GetNode()).ToList();
+        List<INodeCustom> nodelist = portalListarray.Cast<ObjetoInteractuable>().ToList().Select(p => p.GetNode()).ToList();
         foreach (var final in portalList)
         {
             var shortestPath = graphFind.GetShortestPath(nodelist, finalDelCamino.GetNode(), final.GetNode());
             final.ListOfPath(shortestPath);
-            foreach (var node in shortestPath.nodes)
+            foreach (var node in shortestPath.Nodes())
             {
-                node.GetObjetoInteractuable().ChangeMaterial(_terrain.GetMaterial("materialToRoad"));
+                node.GetGameObjectObjectInteractuable().GetComponent<ObjetoInteractuable>().ChangeMaterial(_terrain.GetMaterial("materialToRoad"));
             }
             //final.StartSpawn();
         }

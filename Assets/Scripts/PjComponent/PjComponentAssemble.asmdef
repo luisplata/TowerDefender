@@ -1,0 +1,16 @@
+{
+    "name": "PjComponentAssemble",
+    "rootNamespace": "",
+    "references": [
+        "GUID:90dc982a0799df34a9e566440c000d26"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

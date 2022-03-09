@@ -1,35 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
 /// The Path.
 /// </summary>
-public class Path
+public class Path : IPath
 {
+	public Path()
+	{
+		m_Nodes = new List<INodeCustom>();
+	}
 
 	/// <summary>
 	/// The nodes.
 	/// </summary>
-	protected List<Node> m_Nodes = new List<Node> ();
+	protected List<INodeCustom> m_Nodes;
 	
 	/// <summary>
 	/// The length of the path.
 	/// </summary>
 	protected float m_Length = 0f;
-
-	/// <summary>
-	/// Gets the nodes.
-	/// </summary>
-	/// <value>The nodes.</value>
-	public virtual List<Node> nodes
-	{
-		get
-		{
-			return m_Nodes;
-		}
-	}
 
 	/// <summary>
 	/// Gets the length of the path.
@@ -49,21 +40,21 @@ public class Path
 	/// </summary>
 	public virtual void Bake ()
 	{
-		List<Node> calculated = new List<Node> ();
+		List<INodeCustom> calculated = new List<INodeCustom> ();
 		m_Length = 0f;
 		for ( int i = 0; i < m_Nodes.Count; i++ )
 		{
-			Node node = m_Nodes [ i ];
-			for ( int j = 0; j < node.connections.Count; j++ )
+			INodeCustom node = m_Nodes [ i ];
+			for ( int j = 0; j < node.GetConnections().Count; j++ )
 			{
-				Node connection = node.connections [ j ];
+				INodeCustom connection = node.GetConnections() [ j ];
 				
 				// Don't calcualte calculated nodes
 				if ( m_Nodes.Contains ( connection ) && !calculated.Contains ( connection ) )
 				{
 					
 					// Calculating the distance between a node and connection when they are both available in path nodes list
-					m_Length += Vector3.Distance ( node.transform.position, connection.transform.position );
+					m_Length += Vector3.Distance ( node.GetGameObjectPosition(), connection.GetGameObjectPosition() );
 				}
 			}
 			calculated.Add ( node );
@@ -81,8 +72,12 @@ public class Path
 			"Nodes: {0}\nLength: {1}",
 			string.Join (
 				", ",
-				nodes.Select ( node => node.name ).ToArray () ),
+				m_Nodes.Select ( node => node.GetGameObjectName() ).ToArray () ),
 			length );
 	}
-	
+
+	public List<INodeCustom> Nodes()
+	{
+		return m_Nodes;
+	}
 }

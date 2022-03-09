@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ObjetoInteractuable : MonoBehaviour
 {
@@ -32,9 +29,9 @@ public class ObjetoInteractuable : MonoBehaviour
         gameObject.GetComponent<MeshRenderer>().material = materialToRoad;
     }
 
-    public Node GetNode()
+    public INodeCustom GetNode()
     {
-        return GetComponent<Node>();
+        return GetComponent<INodeCustom>();
     }
 
     public void ListOfPath(Path shortestPath)

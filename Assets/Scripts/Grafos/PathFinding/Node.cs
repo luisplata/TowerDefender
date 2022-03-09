@@ -1,25 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// The Node.
 /// </summary>
-public class Node : MonoBehaviour
+public class Node : MonoBehaviour, INodeCustom
 {
 
     /// <summary>
     /// The connections (neighbors).
     /// </summary>
     [SerializeField]
-    protected List<Node> m_Connections = new List<Node>();
+    protected List<INodeCustom> m_Connections = new List<INodeCustom>();
 
     /// <summary>
     /// Gets the connections (neighbors).
     /// </summary>
     /// <value>The connections.</value>
-    public virtual List<Node> connections
+    public virtual List<INodeCustom> connections
     {
         get
         {
@@ -27,7 +25,7 @@ public class Node : MonoBehaviour
         }
     }
 
-    public Node this[int index]
+    public INodeCustom this[int index]
     {
         get
         {
@@ -35,8 +33,23 @@ public class Node : MonoBehaviour
         }
     }
 
-    public ObjetoInteractuable GetObjetoInteractuable()
+    public List<INodeCustom> GetConnections()
     {
-        return GetComponent<ObjetoInteractuable>();
+        return connections;
+    }
+
+    public Vector3 GetGameObjectPosition()
+    {
+        return gameObject.transform.position;
+    }
+
+    public string GetGameObjectName()
+    {
+        return gameObject.name;
+    }
+
+    public GameObject GetGameObjectObjectInteractuable()
+    {
+        return gameObject;
     }
 }
