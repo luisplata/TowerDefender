@@ -14,6 +14,7 @@ public class BuildTerrain : MonoBehaviour, ITerrain
     [SerializeField] private int minView, maxView;
     [SerializeField] private float deltaCrement;
     private float indexToMouse = 0;
+    private Vector2 mousePosition;
     
     private Terrain _terrain;
     
@@ -77,7 +78,6 @@ public class BuildTerrain : MonoBehaviour, ITerrain
         var crement = context.ReadValue<Vector2>().y;
         if (crement > 0)
         {
-            //ChangeVioport();
             indexToMouse -= deltaCrement;
         }
 
@@ -115,5 +115,27 @@ public class BuildTerrain : MonoBehaviour, ITerrain
         var view = (int)(index * total) + minView;
         Debug.Log($"view {view}");
         camera.m_Lens.FieldOfView = view;
+    }
+
+    public void Point(InputAction.CallbackContext context)
+    {
+        mousePosition = context.ReadValue<Vector2>();
+    }
+
+    public void Click(InputAction.CallbackContext context)
+    {
+        //Debug.Log($"context.canceled {context.canceled }; context.started {context.started}; context.performed {context.performed}");
+        if (!context.started) return;
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.gameObject.TryGetComponent<ObjetoInteractuable>(out var objetoInteractuable))
+            {
+                Debug.Log("es un objeto interactuable");
+            }
+        }
+        //Debug.DrawRay(camera.gameObject.transform.position, ray.direction * 4000, Color.yellow);
     }
 }
