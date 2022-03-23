@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+
 public class Terrain
 {
     private readonly ITerrain _terrain;
@@ -22,6 +24,8 @@ public class Terrain
         portalListarray = new ObjetoInteractuable[size,size];
         graphFind = new Graph();
         GenerateMapAlgoritm();
+        
+        StartGame();
     }
     
     private void GenerateMapAlgoritm()
@@ -40,6 +44,8 @@ public class Terrain
         }
 
         var finalDelCamino = SpawnObject("tower");
+
+        _terrain.AddingToCameraAtPlayer(finalDelCamino);
 
         //spawn portal Enemies
         for (int i = 0; i < countEnemies; i++)
@@ -83,11 +89,23 @@ public class Terrain
         {
             var shortestPath = graphFind.GetShortestPath(nodelist, finalDelCamino.GetNode(), final.GetNode());
             final.ListOfPath(shortestPath);
-            foreach (var node in shortestPath.Nodes())
+            for (int i = 0; i < _size; i++)
             {
-                node.GetGameObjectObjectInteractuable().GetComponent<ObjetoInteractuable>().ChangeMaterial(_terrain.GetMaterial("materialToRoad"));
+                for (int j = 0; j < _size; j++)
+                {
+                    foreach (var node in shortestPath.Nodes())
+                    {
+                        if (portalListarray[i, j].GetNode() == node &&  !portalListarray[i, j].IsFinal && !portalListarray[i, j].IsPortal)
+                        {
+                            portalListarray[i, j].gameObject.SetActive(false);
+                            //Debug.Log($"This portalListarray[i, j] is equals to node {portalListarray[i, j].GetNode() == node}");
+                            var instantiate = _terrain.InstantiateObjectInPosition("road",_terrain.GetVector(i - positionLocalInX, _terrain.Position().y, j - positionLocalInZ));
+                            instantiate.Config();
+                            portalListarray[i, j] = instantiate;
+                        }
+                    }
+                }
             }
-            //final.StartSpawn();
         }
     }
     

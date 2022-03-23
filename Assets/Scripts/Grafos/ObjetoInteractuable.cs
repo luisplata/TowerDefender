@@ -6,6 +6,7 @@ public class ObjetoInteractuable : MonoBehaviour
     [SerializeField] private bool isFinal;
     [SerializeField] private bool isPortal;
     [SerializeField] private PjFather pj;
+    [SerializeField] private GameObject pointToView;
     
     private List<ObjetoInteractuable> aristas;
     public int distancia;
@@ -60,5 +61,10 @@ public class ObjetoInteractuable : MonoBehaviour
             } 
         }
         Destroy(gameObject);
+    }
+
+    public Transform GetPointToView()
+    {
+        return pointToView.transform;
     }
 }
