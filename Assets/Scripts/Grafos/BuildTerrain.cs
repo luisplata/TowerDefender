@@ -6,7 +6,7 @@ public class BuildTerrain : MonoBehaviour, ITerrain
 {
     [SerializeField] private int size;
     [SerializeField] private int countEnemies;
-    [SerializeField] private ObjetoInteractuable cube;
+    [SerializeField] private ObjetoInteractuable[] cubes;
     [SerializeField] private ObjetoInteractuable road;
     [SerializeField] private ObjetoInteractuable tower;
     [SerializeField] private ObjetoInteractuable portalEnemies;
@@ -30,7 +30,7 @@ public class BuildTerrain : MonoBehaviour, ITerrain
 
     public ObjetoInteractuable InstantiateObjectInPosition(string name, Vector3 position)
     {
-        var instantiate = Instantiate(FactoryOfTerrain(name), transform);
+        var instantiate = FactoryOfTerrain(name);
         instantiate.transform.position = transform.position;
         instantiate.transform.position += position;
         return instantiate;
@@ -58,16 +58,52 @@ public class BuildTerrain : MonoBehaviour, ITerrain
 
     public ObjetoInteractuable FactoryOfTerrain(string name)
     {
-        return name switch
+        var instantiateObject = cubes[0];
+        switch (name)
         {
-            "portalEnemies" => portalEnemies,
-            "tower" => tower,
-            "road" => road,
-            _ => cube
-        };
+            case "portalEnemies":
+                // Additional code for "portalEnemies" case
+                instantiateObject = Instantiate(portalEnemies, transform);
+                // Additional code
+                // ...
+                break; // Optional: Use 'break' if you want to exit the switch statement
+
+            case "tower":
+                // Additional code for "tower" case
+                instantiateObject = Instantiate(tower, transform);
+                // Additional code
+                // ...
+                break; // Optional: Use 'break' if you want to exit the switch statement
+
+            case "road":
+                // Additional code for "road" case
+                // Assign 'road' value
+                instantiateObject = Instantiate(road, transform);
+                // Additional code
+                // ...
+                break; // Optional: Use 'break' if you want to exit the switch statement
+
+            default:
+                // Additional code for the default case
+                var randomIndex = Random.Range(0, cubes.Length);
+                instantiateObject = Instantiate(cubes[randomIndex], transform);
+                // Additional code
+                // ...
+                break; // Optional: Use 'break' if you want to exit the switch statement
+        }
+
+        // var instantiateObject = name switch
+        // {
+        //     "portalEnemies" => Instantiate(portalEnemies, transform),
+        //     "tower" => Instantiate(tower, transform),
+        //     "road" => road,
+        //     _ => cubes[Random.Range(0,cubes.Length)]
+        // };
+        
+        return instantiateObject;
     }
 
-    public void AddingToCameraAtPlayer(ObjetoInteractuable player)
+    public void AddingToCameraAtPlayer(Tower player)
     {
         camera.Follow = player.GetPointToView();
         camera.LookAt = player.GetPointToView();
@@ -137,5 +173,20 @@ public class BuildTerrain : MonoBehaviour, ITerrain
             }
         }
         //Debug.DrawRay(camera.gameObject.transform.position, ray.direction * 4000, Color.yellow);
+    }
+
+    public void StartSpawn()
+    {
+        _terrain.StartGame();
+    }
+
+    public void PauseGame()
+    {
+        _terrain.PauseGame();
+    }
+
+    public void PlayGame()
+    {
+        _terrain.PlayGame();
     }
 }

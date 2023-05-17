@@ -1227,6 +1227,7 @@ GameObject:
   - component: {fileID: 1662455275}
   - component: {fileID: 1662455276}
   - component: {fileID: 1662455277}
+  - component: {fileID: 1662455278}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -1262,10 +1263,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: 15
   countEnemies: 1
-  cube: {fileID: -3521630791147645114, guid: 9cbc878ee3eef6f49aae6c10a1bcafc3, type: 3}
+  cubes:
+  - {fileID: -3521630791147645114, guid: 9cbc878ee3eef6f49aae6c10a1bcafc3, type: 3}
+  - {fileID: -3521630791147645114, guid: 890fdd6be35d2e643af9cc532e2172f0, type: 3}
+  - {fileID: -3521630791147645114, guid: aec86bad58f90a44cb705bd9e278e9a5, type: 3}
   road: {fileID: -3521630791147645114, guid: 1b0611e3097822847b30d832d796e4ae, type: 3}
-  tower: {fileID: -1942149824279341582, guid: a5f363bd31bb5e14ab4f98096e2bbea7, type: 3}
-  portalEnemies: {fileID: -9132290917917136802, guid: 12c4b15cc876b7b4d86484b14f91c1c8, type: 3}
+  tower: {fileID: -971945212643274363, guid: a5f363bd31bb5e14ab4f98096e2bbea7, type: 3}
+  portalEnemies: {fileID: -1943580757785520540, guid: 12c4b15cc876b7b4d86484b14f91c1c8, type: 3}
   camera: {fileID: 2072325847}
   minView: 30
   maxView: 70
@@ -1388,6 +1392,20 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1662455278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662455274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5dc31647d995d24b9ceb99c4d5e8058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  building: {fileID: 1662455276}
+  isStartGame: 0
 --- !u!1 &1759790651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,7 +1602,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962322519}
-  m_LocalRotation: {x: 0.48476854, y: 0.00000003365155, z: -0.000000018651289, w: 0.8746425}
+  m_LocalRotation: {x: 0.48476854, y: -0.00000003365155, z: 0.000000018651289, w: 0.8746425}
   m_LocalPosition: {x: 0, y: 15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1728,7 +1746,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072325846}
-  m_LocalRotation: {x: 0.48476854, y: 0.00000003365155, z: -0.000000018651289, w: 0.8746425}
+  m_LocalRotation: {x: 0.48476854, y: -0.00000003365155, z: 0.000000018651289, w: 0.8746425}
   m_LocalPosition: {x: 0, y: 15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

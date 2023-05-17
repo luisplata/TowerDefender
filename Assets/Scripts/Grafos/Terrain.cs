@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class Terrain
     private readonly ITerrain _terrain;
     private readonly int _size;
     private bool hasSpawnTower;
-    private List<ObjetoInteractuable> portalList;
+    private List<PortalEnemy> portalList;
     private ObjetoInteractuable[,] portalListarray;
     private Dictionary<int, List<int>> espaciosUsados;
     private int countEnemies;
@@ -19,13 +20,13 @@ public class Terrain
         _size = size;
         countEnemies = i;
         //materialToRoad = mat;
-        portalList = new List<ObjetoInteractuable>();
+        portalList = new List<PortalEnemy>();
         espaciosUsados = new Dictionary<int, List<int>>();
         portalListarray = new ObjetoInteractuable[size,size];
         graphFind = new Graph();
         GenerateMapAlgoritm();
         
-        StartGame();
+        //StartGame();
     }
     
     private void GenerateMapAlgoritm()
@@ -43,14 +44,14 @@ public class Terrain
             }
         }
 
-        var finalDelCamino = SpawnObject("tower");
+        var finalDelCamino = (Tower)SpawnObject("tower");
 
         _terrain.AddingToCameraAtPlayer(finalDelCamino);
 
         //spawn portal Enemies
         for (int i = 0; i < countEnemies; i++)
         {
-            portalList.Add(SpawnObject("portalEnemies"));
+            portalList.Add((PortalEnemy)SpawnObject("portalEnemies"));
         }
         
         //adding conextions in nodes
@@ -95,7 +96,7 @@ public class Terrain
                 {
                     foreach (var node in shortestPath.Nodes())
                     {
-                        if (portalListarray[i, j].GetNode() == node &&  !portalListarray[i, j].IsFinal && !portalListarray[i, j].IsPortal)
+                        if (portalListarray[i, j].GetNode() == node &&  portalListarray[i, j].GetType() != typeof(Tower) && portalListarray[i, j].GetType()!=typeof(PortalEnemy))
                         {
                             portalListarray[i, j].gameObject.SetActive(false);
                             //Debug.Log($"This portalListarray[i, j] is equals to node {portalListarray[i, j].GetNode() == node}");
@@ -115,11 +116,11 @@ public class Terrain
         {
             ofObject.DestroyAll();
         }
-        portalList = new List<ObjetoInteractuable>();
+        portalList = new List<PortalEnemy>();
         espaciosUsados = new Dictionary<int, List<int>>();
         portalListarray = new ObjetoInteractuable[_size, _size];
         GenerateMapAlgoritm();
-        StartGame();
+        //StartGame();
     }
     
     private ObjetoInteractuable SpawnObject(string name)
@@ -156,6 +157,22 @@ public class Terrain
         foreach (var final in portalList)
         {
             final.StartSpawn();
-        }       
+        }
+    }
+
+    internal void PauseGame()
+    {
+        foreach (var final in portalList)
+        {
+            final.PauseSpawn();
+        }
+    }
+
+    internal void PlayGame()
+    {
+        foreach (var final in portalList)
+        {
+            final.PlaySpawn();
+        }
     }
 }

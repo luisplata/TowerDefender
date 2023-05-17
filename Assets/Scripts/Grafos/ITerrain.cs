@@ -8,5 +8,5 @@ public interface ITerrain
     int Random_Range(int min, int max);
     Vector3 GetVector(int x, float y, int z);
     ObjetoInteractuable FactoryOfTerrain(string name);
-    void AddingToCameraAtPlayer(ObjetoInteractuable player);
+    void AddingToCameraAtPlayer(Tower player);
 }
