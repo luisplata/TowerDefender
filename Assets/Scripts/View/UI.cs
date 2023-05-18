@@ -5,19 +5,25 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> points;
-
-    [SerializeField] private Carta carta;
+    [SerializeField] private Carta[] cartas;
 
     [SerializeField] private GameObject parent;
-    //[SerializeField] private FactoryOfCarts factoryCarts;
+
+    public void ShowUi(bool isStartGame)
+    {
+        parent.SetActive(isStartGame);
+    }
+
+    public Action OnClickInCard;
 
     private void Start()
     {
-        foreach (var point in points)
-        {
+        foreach(var carta in cartas){
             var cartaInstanciada = Instantiate(carta, parent.transform);
-            cartaInstanciada.transform.position = point.transform.position;
+            cartaInstanciada.Config();
+            cartaInstanciada.onClick = ()=>{
+                OnClickInCard?.Invoke();
+            };
         }
     }
 }

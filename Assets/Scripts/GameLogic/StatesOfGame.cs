@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class StatesOfGame : MonoBehaviour{
     [SerializeField] private BuildTerrain building;
+    [SerializeField] private UI ui;
     [SerializeField] private bool isStartGame;
     TeaTime begingGame, playGame, pauseGame;
     private void Start() {
@@ -32,5 +33,13 @@ public class StatesOfGame : MonoBehaviour{
         });
 
         begingGame.Play();
+
+        ui.OnClickInCard += ()=>{
+            building.ShowPlaceEnables();
+        };
+    }
+    public void StartGame(bool start){
+        isStartGame = start;
+        ui.ShowUi(!isStartGame);
     }
 }

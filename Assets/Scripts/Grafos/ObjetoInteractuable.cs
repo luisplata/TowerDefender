@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjetoInteractuable : MonoBehaviour
+public abstract class ObjetoInteractuable : MonoBehaviour
 {   
     private List<ObjetoInteractuable> aristas;
     private bool visitado;

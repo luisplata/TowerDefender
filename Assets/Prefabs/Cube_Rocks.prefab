@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2928443737165759014}
   - component: {fileID: 5098900629274941067}
   - component: {fileID: 5117909871874451357}
-  - component: {fileID: -3521630791147645114}
   - component: {fileID: -2402275252631598291}
+  - component: {fileID: 5018879468224182798}
   m_Layer: 0
   m_Name: Cube_Rocks
   m_TagString: Untagged
@@ -99,23 +99,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-3521630791147645114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098016027815623043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 825100ab19b55dd498d908838fe6947b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFinal: 0
-  isPortal: 0
-  pj: {fileID: 0}
-  pointToView: {fileID: 0}
-  distancia: 1
 --- !u!114 &-2402275252631598291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +111,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be61ab9dbbb00494aac4aeed37d42288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5018879468224182798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098016027815623043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49eaeee431405a04aa277d7119b8e418, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClickeable: 0
 --- !u!1001 &6949632446553719378
 PrefabInstance:
   m_ObjectHideFlags: 0

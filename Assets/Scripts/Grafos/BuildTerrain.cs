@@ -10,6 +10,7 @@ public class BuildTerrain : MonoBehaviour, ITerrain
     [SerializeField] private ObjetoInteractuable road;
     [SerializeField] private ObjetoInteractuable tower;
     [SerializeField] private ObjetoInteractuable portalEnemies;
+    [SerializeField] private GameObject vayoneta;
     [SerializeField] private CinemachineVirtualCamera camera;
     [SerializeField] private int minView, maxView;
     [SerializeField] private float deltaCrement;
@@ -17,6 +18,7 @@ public class BuildTerrain : MonoBehaviour, ITerrain
     private Vector2 mousePosition;
     
     private Terrain _terrain;
+    private bool isCanClickInTerrain;
     
     private void Start()
     {
@@ -160,19 +162,42 @@ public class BuildTerrain : MonoBehaviour, ITerrain
 
     public void Click(InputAction.CallbackContext context)
     {
-        //Debug.Log($"context.canceled {context.canceled }; context.started {context.started}; context.performed {context.performed}");
         if (!context.started) return;
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.gameObject.TryGetComponent<ObjetoInteractuable>(out var objetoInteractuable))
+            if (hit.collider.gameObject.TryGetComponent<NormalPlace>(out var objetoInteractuable))
             {
-                Debug.Log("es un objeto interactuable");
+                if(isCanClickInTerrain){
+                    Debug.Log($"el objeto {hit.transform.name} interactuable {objetoInteractuable.IsClickeable}");
+                    isCanClickInTerrain = false;
+                    HidePlaceEnables();
+                    var vayonetaInstanciada = FactoryOfArsenal("Vayoneta");
+                    vayonetaInstanciada.transform.SetParent(objetoInteractuable.transform);
+                    vayonetaInstanciada.transform.localPosition = Vector3.zero;
+                    objetoInteractuable.HaveArsenal();
+                }
             }
         }
-        //Debug.DrawRay(camera.gameObject.transform.position, ray.direction * 4000, Color.yellow);
+    }
+
+    private GameObject FactoryOfArsenal(string name)
+    {
+        GameObject instantiate = null;
+        switch (name)
+        {
+            case "Vayoneta":
+                instantiate = Instantiate(vayoneta, transform);
+                break;
+        }
+        return instantiate;
+    }
+
+    private void HidePlaceEnables()
+    {
+        _terrain.HidePlaceEnables();
     }
 
     public void StartSpawn()
@@ -188,5 +213,11 @@ public class BuildTerrain : MonoBehaviour, ITerrain
     public void PlayGame()
     {
         _terrain.PlayGame();
+    }
+
+    public void ShowPlaceEnables()
+    {
+        isCanClickInTerrain = true;
+        _terrain.ShowPlaceEnables();
     }
 }

@@ -175,4 +175,40 @@ public class Terrain
             final.PlaySpawn();
         }
     }
+
+    internal void ShowPlaceEnables()
+    {
+        for (int i = 0; i < _size; i++)
+        {
+            for (int j = 0; j < _size; j++)
+            {
+                try{
+                    var place = (NormalPlace)portalListarray[i, j];
+                    if(place.IsClickeable){
+                        place.ShowPlace();
+                    }
+                }catch(Exception){
+                    continue;
+                }
+            }
+        }
+    }
+
+    internal void HidePlaceEnables()
+    {
+        for (int i = 0; i < _size; i++)
+        {
+            for (int j = 0; j < _size; j++)
+            {
+                try{
+                    var place = (NormalPlace)portalListarray[i, j];
+                    if(place.IsClickeable){
+                        place.HidePlace();
+                    }
+                }catch(Exception){
+                    continue;
+                }
+            }
+        }
+    }
 }
