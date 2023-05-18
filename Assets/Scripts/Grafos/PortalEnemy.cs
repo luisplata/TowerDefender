@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PortalEnemy : ObjetoInteractuable{
-    [SerializeField] private PjFather pj;
+    [SerializeField] private ListOfEnemies list;
     [SerializeField] private float timeSpawnCooldown;
     private bool isCanBreak = true;
     private Path _shortestPath;
@@ -26,7 +26,7 @@ public class PortalEnemy : ObjetoInteractuable{
         while(isCanBreak){
             yield return new WaitForSeconds(timeSpawnCooldown);
             if(!isCanSpawn)continue;
-            var pjFather = Instantiate(pj);
+            var pjFather = Instantiate(list.GetMoster());
             var positionInPj = transform.position;
             positionInPj.y += 1;
             pjFather.transform.position = positionInPj;

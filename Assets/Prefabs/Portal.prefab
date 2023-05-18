@@ -123,7 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257bc196085b0ae44bb0afeb68b638f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pj: {fileID: 4589881570311270237, guid: 4350e2584fd44b247ae3c8997383f3d6, type: 3}
+  pj: {fileID: 4589881570311270237, guid: 71e8d63cbaa210e44890f0db4884b519, type: 3}
+  list: {fileID: 11400000, guid: 8e07abfca368d144284faac43cc0d726, type: 2}
   timeSpawnCooldown: 5
 --- !u!1001 &1864161816264420750
 PrefabInstance:

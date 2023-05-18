@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
     [SerializeField] private Carta[] cartas;
 
     [SerializeField] private GameObject parent;
+    [SerializeField] private GameObject panelGameOver;
+    [SerializeField] private Button buttonToRestart;
 
     public void ShowUi(bool isStartGame)
     {
@@ -25,5 +29,13 @@ public class UI : MonoBehaviour
                 OnClickInCard?.Invoke();
             };
         }
+        buttonToRestart.onClick.AddListener(()=>{
+            SceneManager.LoadScene(0);
+        });
+    }
+
+    public void GameOver()
+    {
+        panelGameOver.SetActive(true);
     }
 }

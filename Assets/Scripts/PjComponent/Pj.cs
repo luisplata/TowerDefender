@@ -11,12 +11,14 @@ namespace PjComponent
         private IPath _shortestPath;
         private readonly IPj _pjbase;
         private float speed;
+        private float _life;
 
-        public Pj(IPath shortestPath, float speedFather, IPj pjbase)
+        public Pj(IPath shortestPath, float speedFather, IPj pjbase, float lifeInComming)
         {
             speed = speedFather;
             _shortestPath = shortestPath;
             _pjbase = pjbase;
+            _life = lifeInComming;
             path = new Queue<INodeCustom>();
             var listOfNodes = _shortestPath.Nodes();
             
@@ -41,6 +43,19 @@ namespace PjComponent
             if (!_pjbase.IsClose(_pjbase.GetPosition(), concurrentNode.GetGameObjectPosition()) || count <= 0) return;
             count--;
             concurrentNode = _shortestPath.Nodes()[count];
+        }
+
+        internal void ApplyDamange(float damage)
+        {
+            _life -= damage;
+            if(_life <= 0){
+                _pjbase.DestroyMoster();
+            }
+        }
+
+        internal bool CanMove()
+        {
+            return _life > 0;
         }
     }
 }

@@ -132,7 +132,7 @@ public class BuildTerrain : MonoBehaviour, ITerrain
         {
             indexToMouse = 1;
         }
-        Debug.Log($"indexToMouse {indexToMouse}");
+        //Debug.Log($"indexToMouse {indexToMouse}");
         ChangeVioport(indexToMouse);
     }
 
@@ -147,11 +147,11 @@ public class BuildTerrain : MonoBehaviour, ITerrain
         {
             index = 1;
         }
-        Debug.Log($"index {index}");
+        //Debug.Log($"index {index}");
         var total = maxView - minView;
 
         var view = (int)(index * total) + minView;
-        Debug.Log($"view {view}");
+        //Debug.Log($"view {view}");
         camera.m_Lens.FieldOfView = view;
     }
 
@@ -163,21 +163,21 @@ public class BuildTerrain : MonoBehaviour, ITerrain
     public void Click(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
         
-        if (Physics.Raycast(ray, out hit))
+        foreach(var hit in Physics.RaycastAll(ray))
         {
             if (hit.collider.gameObject.TryGetComponent<NormalPlace>(out var objetoInteractuable))
             {
-                if(isCanClickInTerrain){
-                    Debug.Log($"el objeto {hit.transform.name} interactuable {objetoInteractuable.IsClickeable}");
+                if(isCanClickInTerrain && objetoInteractuable.IsClickeable){
+                    //Debug.Log($"el objeto {hit.transform.name} interactuable {objetoInteractuable.IsClickeable}");
                     isCanClickInTerrain = false;
                     HidePlaceEnables();
                     var vayonetaInstanciada = FactoryOfArsenal("Vayoneta");
                     vayonetaInstanciada.transform.SetParent(objetoInteractuable.transform);
                     vayonetaInstanciada.transform.localPosition = Vector3.zero;
                     objetoInteractuable.HaveArsenal();
+                    break;
                 }
             }
         }

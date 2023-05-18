@@ -1,10 +1,11 @@
+using TowerDefender.Assets.Scripts.Utils;
 using UnityEngine;
 
 public class StatesOfGame : MonoBehaviour{
     [SerializeField] private BuildTerrain building;
     [SerializeField] private UI ui;
     [SerializeField] private bool isStartGame;
-    TeaTime begingGame, playGame, pauseGame;
+    TeaTime begingGame, playGame, pauseGame, gameOver;
     private void Start() {
         //PauseGame
         begingGame = this.tt().Pause().Add(()=>{
@@ -19,17 +20,26 @@ public class StatesOfGame : MonoBehaviour{
             building.PlayGame();
         }).Loop((TeaHandler t)=>{
             t.Wait(0.2f);
-            if(!isStartGame){
+            if(!isStartGame || ServiceLocator.Instance.GetService<IGame>().IsGameOver()){
                 t.Break();
             }
         }).Add(()=>{
-            pauseGame.Play();
+            if(ServiceLocator.Instance.GetService<IGame>().IsGameOver()){
+                gameOver.Play();
+            }else{
+                pauseGame.Play();
+            }
         });
 
         pauseGame = this.tt().Pause().Add(()=>{
             building.PauseGame();
         }).Wait(()=>isStartGame,0.1f).Add(()=>{
             playGame.Restart();
+        });
+
+        gameOver = this.tt().Pause().Add(()=>{
+            ui.GameOver();
+            ServiceLocator.Instance.GetService<IGame>().ResetGame();
         });
 
         begingGame.Play();

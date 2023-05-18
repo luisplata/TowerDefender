@@ -24,7 +24,7 @@ namespace PjComponent.PjComponentTDD
         public void CreatingPjSimplePasses()
         {
             path.Nodes().Returns(new List<INodeCustom> {nodeSub});
-            var pj = new Pj(path, 1, iPj);
+            var pj = new Pj(path, 1, iPj, 2);
             path.Received(1).Nodes();
         }
 
@@ -34,7 +34,7 @@ namespace PjComponent.PjComponentTDD
             path.Nodes().Returns(new List<INodeCustom>());
             Assert.Throws<Exception>(() =>
             {
-                var pj = new Pj(path, 1, iPj);
+                var pj = new Pj(path, 1, iPj, 2);
             });
         }
 
@@ -42,7 +42,7 @@ namespace PjComponent.PjComponentTDD
         public void ActionPj_inNormalSituation_CanMove()
         {
             path.Nodes().Returns(new List<INodeCustom>{nodeSub});
-            var pj = new Pj(path, 1, iPj);
+            var pj = new Pj(path, 1, iPj, 2);
             
             pj.Action();
 

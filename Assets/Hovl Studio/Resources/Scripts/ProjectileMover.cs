@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class ProjectileMover : MonoBehaviour
     public GameObject flash;
     private Rigidbody rb;
     public GameObject[] Detached;
+    [SerializeField]private GameObject _targetForShoot;
 
     void Start()
     {
@@ -41,14 +43,20 @@ public class ProjectileMover : MonoBehaviour
     {
 		if (speed != 0)
         {
-            rb.velocity = transform.forward * speed;
-            //transform.position += transform.forward * (speed * Time.deltaTime);         
+            if(_targetForShoot == null)return;
+            // Calculate the direction from the bullet to the target
+            Vector3 directionToTarget = (_targetForShoot.transform.position - transform.position).normalized;
+            // Apply force to the bullet to make it move towards the target
+            // rb.AddForce(directionToTarget * speed, ForceMode.Force);
+            //rb.velocity = directionToTarget * speed;
+            transform.position += directionToTarget * (speed * Time.deltaTime);         
         }
 	}
 
     //https ://docs.unity3d.com/ScriptReference/Rigidbody.OnCollisionEnter.html
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag != "Enemy") return;
         //Lock all axes movement and rotation
         rb.constraints = RigidbodyConstraints.FreezeAll;
         speed = 0;
@@ -88,5 +96,10 @@ public class ProjectileMover : MonoBehaviour
         }
         //Destroy projectile on collision
         Destroy(gameObject);
+    }
+
+    public void Configure(GameObject targetForShoot)
+    {
+        _targetForShoot = targetForShoot;
     }
 }
